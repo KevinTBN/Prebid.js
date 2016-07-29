@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import * as bidmanager from 'src/bidmanager';
 import adapter from 'src/adapters/ut';
 
 const ENDPOINT = 'http://ib.adnxs.com/ut/v2';
@@ -29,19 +28,18 @@ const params = {
 
 describe('AppNexusAdapter', () => {
 
-    let xhr;
-    let requests;
+  let xhr;
+  let requests;
 
-    beforeEach(() => {
-      xhr = sinon.useFakeXMLHttpRequest();
-      requests = [];
-      xhr.onCreate = request => requests.push(request);
-    });
+  beforeEach(() => {
+    xhr = sinon.useFakeXMLHttpRequest();
+    requests = [];
+    xhr.onCreate = request => requests.push(request);
+  });
 
-    afterEach(() => {
-      xhr.restore();
-    });
-
+  afterEach(() => {
+    xhr.restore();
+  });
 
   it('exists and is a function', () => {
     expect(adapter).to.exist.and.to.be.a('function');
@@ -51,13 +49,6 @@ describe('AppNexusAdapter', () => {
     adapter().callBids(params);
     expect(requests[0].url).to.equal(ENDPOINT);
     expect(requests[0].method).to.equal('POST');
-  });
-
-  xit('registers a bid response', () => {
-    const addBidResponse = sinon.stub(bidmanager, 'addBidResponse');
-    adapter().callBids(params);
-    // sinon.assert.calledOnce(addBidResponse);
-    bidmanager.addBidResponse.restore();
   });
 
 });
